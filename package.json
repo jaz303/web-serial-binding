@@ -1,0 +1,21 @@
+{
+  "name": "web-serial-duplex-stream",
+  "version": "0.0.1",
+  "description": "Bridges a Web Serial port to a node.js stream",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web",
+    "serial",
+    "port",
+    "serialport",
+    "stream"
+  ],
+  "author": "Jason Frame",
+  "license": "MIT"
+}
