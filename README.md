@@ -17,15 +17,15 @@ const nativePort = await navigator.serial.requestPort();
 const port = new SerialPort(nativePort, {baudRate: 115200});
 
 port.on('open', () => {
-	console.log("port opened!");
+    console.log("port opened!");
 });
 
 port.on('data', (buf) => {
-	console.log("data received", buf);
+    console.log("data received", buf);
 });
 
 setInterval(() => {
-	port.write("hello!\r\n");
+    port.write("hello!\r\n");
 }, 1000);
 
 ```
