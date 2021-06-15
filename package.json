@@ -1,7 +1,7 @@
 {
-  "name": "web-serial-duplex-stream",
+  "name": "web-serial-binding",
   "version": "0.0.1",
-  "description": "Bridges a Web Serial port to a node.js stream",
+  "description": "Provides a Web Serial binding for the serialport library",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib"
@@ -17,5 +17,11 @@
     "stream"
   ],
   "author": "Jason Frame",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@serialport/binding-abstract": "^9.0.7"
+  },
+  "devDependencies": {
+    "@serialport/stream": "^9.0.7"
+  }
 }

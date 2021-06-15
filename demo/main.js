@@ -1,39 +1,43 @@
-const { WebSerialDuplexStream } = require('..');
+const SerialPort = require('@serialport/stream');
+SerialPort.Binding = require('..');
 
 document.addEventListener('DOMContentLoaded', () => {
 	const decoder = new TextDecoder();
 
-	let stream;
+	let port;
 
 	document.querySelector('button[name="open"]').onclick = async () => {
-		if (stream) {
+		if (port) {
 			return;
 		}
 		
-		const port = await navigator.serial.requestPort();
-		await port.open({baudRate: 115200});
+		const nativePort = await navigator.serial.requestPort();
 
-		stream = new WebSerialDuplexStream(port);
+		port = new SerialPort(nativePort, {baudRate: 115200});
 
-		stream.on('data', (data) => {
+		port.on('open', () => {
+			console.log("port open!");
+		});
+
+		port.on('data', (data) => {
 			console.log("recv", JSON.stringify(decoder.decode(data)));
 		});
 
-		stream.on('end', () => {
+		port.on('end', () => {
 			console.log("stream ended");
 		});
 
 		setInterval(() => {
-			stream.write("HELLO\r\n");
+			port.write("HELLO\r\n");
 		}, 100);
 	};
 
 	document.querySelector('button[name="close"]').onclick = async () => {
-		if (!stream) {
+		if (!port) {
 			return;
 		}
-		stream.destroy();
-		stream = null;
+		port.close();
+		port = null;
 		return;
 	};
 });

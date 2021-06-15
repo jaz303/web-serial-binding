@@ -1,22 +1,31 @@
-# web-serial-duplex-stream
+# web-serial-binding
 
-`web-serial-duplex-stream` provides a class that bridges a Web Serial port to a traditional node.js stream.
+`web-serial-binding` provides a Web Serial binding for [`node-serialport`](https://github.com/serialport/node-serialport).
+
+Status: basic read/write functionality in place, working on closing/cancellation.
 
 ## Usage
 
 ```javascript
-const {WebSerialDuplexStream} = require('web-serial-duplex-stream');
+const SerialPort = require('@serialport/stream');
+SerialPort.Binding = require('web-serial-binding');
 
 // Open a port from the browser
-const port = await navigator.serial.requestPort();
-await port.open({baudRate: 115200});
+const nativePort = await navigator.serial.requestPort();
 
-// Create the stream
-const stream = new WebSerialDuplexStream(port);
+// Create the serial port
+const port = new SerialPort(nativePort, {baudRate: 115200});
 
-stream.on('data', (buf) => {
+port.on('open', () => {
+	console.log("port opened!");
+});
+
+port.on('data', (buf) => {
 	console.log("data received", buf);
 });
 
-stream.write(Buffer.from("hello!\r\n"));
+setInterval(() => {
+	port.write("hello!\r\n");
+}, 1000);
+
 ```
