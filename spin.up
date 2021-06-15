@@ -1,0 +1,2 @@
+watchify -o demo/bundle.js demo/main.js
+static demo -p 5678
