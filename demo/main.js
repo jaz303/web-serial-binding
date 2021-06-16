@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         const nativePort = await navigator.serial.requestPort();
+        let sendTimer;
 
         port = new SerialPort(nativePort, {baudRate: 115200});
 
@@ -36,7 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("stream ended");
         });
 
-        setInterval(() => {
+        port.on('close', () => {
+            console.log("port closed");
+            clearInterval(sendTimer);
+        });
+
+        sendTimer = setInterval(() => {
             port.write("HELLO\r\n");
         }, 100);
     };
