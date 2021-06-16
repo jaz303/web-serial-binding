@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         port.on('open', () => {
             console.log("port open!");
+            port.set({}, () => {
+                port.get((err, signals) => {
+                    console.log("signals", signals);
+                });
+            });
         });
 
         port.on('data', (data) => {
