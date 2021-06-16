@@ -1,7 +1,11 @@
 const SerialPort = require('@serialport/stream');
 SerialPort.Binding = require('..');
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    const ports = await SerialPort.list();
+    console.log("Available ports", ports);
+
     const decoder = new TextDecoder();
 
     let port;
